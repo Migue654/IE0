@@ -5,27 +5,12 @@ import { Tab } from "three/examples/jsm/inspector/ui/Tab.js";
 import { useState } from "react";
 import { update } from "three/examples/jsm/libs/tween.module.js";
 
+import Form from "./Form"
+
 
 
 function MyApp() {
-    const [characters, setcharacters] = useState( [
-        {
-            name: "Charlie",
-            job:"Janitor"
-        },
-        {
-            name: "Mac",
-            job:"Bouncer"
-        },
-        {
-            name: "Dee",
-            job:"Aspiring actress"
-        },
-        {
-            name: "Dennis",
-            job:"Bartender"
-        }
-    ])
+    const [characters, setcharacters] = useState( [])
     function removeOneCharacter(index) {
         const updated = characters.filter((character, i) => {
         return i !== index;
@@ -37,6 +22,7 @@ function MyApp() {
     return (
         <div className="container">
             <Table characterData={characters} removeCharacter={removeOneCharacter} />
+            <Form/>
         </div>
     )
 }
