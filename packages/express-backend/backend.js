@@ -1,5 +1,6 @@
 // backend.js
 import express from "express";
+import { attribute } from "three/tsl";
 const users = {
   users_list: [
     {
@@ -76,7 +77,38 @@ app.post("/users", (req, res)=> {
     addUser(userToAdd)
     res.send()
 })
+//------------------------- Part 7 (DELETE) ------------------------------------
+const deleteuser = (user) => {
+  users["users_list"] = users["users_list"].filter(id =>  id != user)
 
+}
+app.delete("/users/:id", (req,res) => {
+  const usertoDelete = findUserById (req.params.id)
+  if (usertoDelete == undefined){
+    res.status(404).send("Id not in list of users")
+  }
+  else {
+    deleteuser(usertoDelete)
+    res.send()
+  }
+
+})
+// ----------------------------PART 7 (Matching Attributes)------------------
+
+const getusers = (name,job) => {
+  return users["users_list"].filter((user) => user["name"] == name).filter((user) => user["job"]== job)
+}
+app.get("/users/:name/:job", (req,res) => {
+
+  let result = getusers(req.params.name, req.params.job)
+  if (result.length == 0){
+    res.status(404).send("User not in List")
+  }
+  else {
+
+    res.send(result)
+  }
+});
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
